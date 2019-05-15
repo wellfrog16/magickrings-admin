@@ -12,16 +12,6 @@
                 />
             </el-form-item>
             <el-form-item>
-                <el-select style="width: 120px;" v-model="form.fields.education" clearable placeholder="所有学历">
-                    <el-option
-                        v-for="item in edus"
-                        :key="item"
-                        :label="item"
-                        :value="item"
-                    />
-                </el-select>
-            </el-form-item>
-            <el-form-item>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">查询</el-button>
             </el-form-item>
         </el-form>
@@ -45,7 +35,6 @@ export default {
             form: {
                 fields: {
                     q: '',
-                    education: '',
                 },
                 rules: {},
             },

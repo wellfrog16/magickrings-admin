@@ -1,4 +1,4 @@
-# template-vue-clear
+# magickrings-admin
 
 ## Project setup
 ```
