@@ -18,7 +18,7 @@ export default {
     getters: {
         // 选中行的guid
         multipleSelectionGuid(state) {
-            return state.multipleSelection.map(item => item.guid).join(',');
+            return state.multipleSelection.map(item => item.id).join(',');
         },
 
         // 当前编辑行

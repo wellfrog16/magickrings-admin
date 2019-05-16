@@ -89,7 +89,7 @@ export default {
 
         // 图片地址
         photoUrl() {
-            return `${config.server.img}/${this.form.fields.photo}`;
+            return `${config.server.img}/image/${this.form.fields.photo}`;
         },
     },
     methods: {
@@ -135,7 +135,7 @@ export default {
             this.saveBusy = true;
 
             // 更新列表（非刷新获取，仅前端根据当前数据更新）
-            if (this.form.fields.guid) {
+            if (this.form.fields.id) {
                 // 远程更新
                 await api.update(this.form.fields);
             } else {
@@ -161,10 +161,16 @@ export default {
         cursor: pointer;
         position: relative;
         overflow: hidden;
+        line-height: 0;
 
         &:hover {
             border-color: #409eff;
         }
+    }
+
+    img {
+        width: 178px;
+        height: 178px;
     }
 }
 

@@ -60,7 +60,7 @@ export default {
             this.setState({ activeIndex, loading: true });
 
             // 远程删除
-            await api.remove({ guid: row.guid });
+            await api.remove(row.id);
 
             this.$nextTick(() => this.setState({ loading: false, overdue: true }));
         },
