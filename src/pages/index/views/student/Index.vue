@@ -20,7 +20,7 @@ import XSearch from '#index/components/student/search.vue';
 import XTable from '#index/components/student/table.vue';
 import XPagination from '#index/components/student/pagination.vue';
 
-const { mapState, mapMutations } = createNamespacedHelpers('taobaoInfo');
+const { mapState, mapMutations } = createNamespacedHelpers('student');
 
 export default {
     components: {
@@ -37,7 +37,7 @@ export default {
         next();
     },
     methods: {
-        ...mapMutations(['setState', 'test']),
+        ...mapMutations(['setState']),
     },
 };
 </script>

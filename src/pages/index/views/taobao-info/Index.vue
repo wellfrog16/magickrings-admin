@@ -37,7 +37,7 @@ export default {
         next();
     },
     methods: {
-        ...mapMutations(['setState', 'test']),
+        ...mapMutations(['setState']),
     },
 };
 </script>

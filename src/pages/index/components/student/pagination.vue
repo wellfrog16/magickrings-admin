@@ -53,7 +53,7 @@ export default {
             this.setState({ loading: true });
 
             // 远程删除
-            await api.remove({ guid: this.multipleSelectionGuid });
+            await api.batchRemove({ ids: this.multipleSelectionGuid });
 
             this.$nextTick(() => this.setState({ loading: false, overdue: true }));
         },

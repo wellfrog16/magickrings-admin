@@ -9,24 +9,11 @@
         @selection-change="handleSelectionChange"
     >
         <el-table-column type="selection" width="60" align="center" />
-        <el-table-column prop="name" label="姓名" width="120">
-            <template slot-scope="scope">
-                <span>{{ scope.row.name }}</span>
-                <i class="fas fa-lg fa-fw" :class="scope.row.gender | genderFilter" />
-            </template>
+        <el-table-column prop="name" label="学员姓名" width="120" />
+        <el-table-column prop="code" label="证书编号" width="200" />
+        <el-table-column prop="course" label="课程">
+            <template slot-scope="scope">{{ scope.row.course.join('，') }}</template>
         </el-table-column>
-        <el-table-column prop="income" label="收入" width="150" align="right" sortable>
-            <template slot-scope="scope">
-                {{ scope.row.income | currency('￥', 2) }}
-            </template>
-        </el-table-column>
-        <el-table-column prop="education" label="学历" width="150" align="center" />
-        <el-table-column prop="status" label="状态" width="80" align="center">
-            <template slot-scope="scope">
-                <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
-            </template>
-        </el-table-column>
-        <el-table-column prop="remark" label="备注" show-overflow-tooltip min-width="300" />
         <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
                 <el-button @click="handleEdit(scope.$index)" type="primary" size="mini" icon="el-icon-edit" />
@@ -39,40 +26,12 @@
 <script>
 import api from '@/api/usr/student';
 import { createNamespacedHelpers } from 'vuex';
-import style from '@/assets/style/usr/app.module.less';
 
 const { mapState, mapMutations } = createNamespacedHelpers('student');
 
 export default {
-    filters: {
-        statusFilter(status) {
-            const list = [
-                { key: '在职', value: 'info' },
-                { key: '待业', value: 'danger' },
-                { key: '退休', value: '' },
-                { key: '创业', value: 'success' },
-                { key: '游学', value: 'warning' },
-            ];
-
-            const result = list.find(item => item.key === status);
-            return result ? result.value : '';
-        },
-        genderFilter(gender) {
-            return gender === '男'
-                ? ['fa-male', style['c-male']]
-                : ['fa-female', style['c-female']];
-        },
-    },
     data() {
         return {
-            style,
-            statusData: [
-                { text: '在职', value: '在职' },
-                { text: '待业', value: '待业' },
-                { text: '退休', value: '退休' },
-                { text: '创业', value: '创业' },
-                { text: '游学', value: '游学' },
-            ],
         };
     },
     computed: {
@@ -104,7 +63,7 @@ export default {
             this.setState({ activeIndex, loading: true });
 
             // 远程删除
-            await api.remove({ guid: row.guid });
+            await api.remove(row.id);
 
             this.$nextTick(() => this.setState({ loading: false, overdue: true }));
         },
