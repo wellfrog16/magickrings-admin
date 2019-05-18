@@ -1,43 +1,56 @@
 <template>
     <el-dialog
-        title="学员资历"
+        title="课程"
         :visible.sync="editVisible"
         :before-close="handleClose"
         :close-on-click-modal="false"
-        class="or-dialog"
-        width="500px"
-        top="50px"
+        :custom-class="$style.main"
+        width="1000px"
     >
         <el-form ref="form" :model="form.fields" :rules="form.rules" label-width="80px" v-loading="saveBusy">
-            <el-form-item prop="name" label="学员姓名">
-                <el-input v-model="form.fields.name" minlength="1" maxlength="20" />
-            </el-form-item>
-            <el-form-item prop="code" label="证书编号">
-                <el-input v-model="form.fields.code" minlength="1" maxlength="40" />
-            </el-form-item>
-            <el-form-item prop="course" label="课程">
-                <el-checkbox-group v-model="form.fields.course">
-                    <el-checkbox-button v-for="course in courses" :label="course" :key="course">{{ course }}</el-checkbox-button>
-                </el-checkbox-group>
-            </el-form-item>
-            <el-form-item prop="level" label="等级" :class="$style.level" class="flex-row-center">
-                <el-rate v-model="form.fields.level"></el-rate>
-            </el-form-item>
-            <el-form-item prop="message" label="简述">
-                <el-input v-model="form.fields.message" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" />
-            </el-form-item>
-            <el-form-item prop="photo" label="照片">
-                <el-upload
-                    name="avatar"
-                    :class="$style['photo-uploader']"
-                    :action="uploadUrl"
-                    :show-file-list="false"
-                    :on-success="handleUploadSuccess"
-                >
-                    <img v-if="form.fields.photo" :src="photoUrl" class="avatar">
-                    <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
-                </el-upload>
-            </el-form-item>
+            <el-tabs v-model="activeName">
+                <el-tab-pane label="基础信息" name="a">
+                    <el-form-item prop="name" label="课程名称">
+                        <el-input v-model="form.fields.name" minlength="1" maxlength="20" />
+                    </el-form-item>
+                    <el-form-item prop="dateRange" label="有效期">
+                        <el-date-picker
+                            v-model="form.fields.dateRange"
+                            type="daterange"
+                            range-separator="至"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item prop="code" label="人数">
+                        <el-input-number v-model="form.fields.num1" :min="0" controls-position="right" placeholder="剩余"></el-input-number> /
+                        <el-input-number v-model="form.fields.num2" :min="1" controls-position="right" placeholder="总人数"></el-input-number>
+                    </el-form-item>
+                    <el-form-item prop="code" label="价格">
+                        <el-input-number v-model="form.fields.price" :min="0" label="价格" :controls="false"></el-input-number>
+                    </el-form-item>
+                    <el-form-item prop="description" label="简述">
+                        <el-input v-model="form.fields.description" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" />
+                    </el-form-item>
+                    <el-form-item prop="photo" label="照片">
+                        <el-upload
+                            name="avatar"
+                            :class="$style['photo-uploader']"
+                            :action="uploadUrl"
+                            :show-file-list="false"
+                            :on-success="handleUploadSuccess"
+                        >
+                            <img v-if="form.fields.photo" :src="photoUrl" class="avatar">
+                            <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
+                        </el-upload>
+                    </el-form-item>
+                </el-tab-pane>
+                <el-tab-pane label="详细描述" name="b">
+                    <tinymce v-model="form.fields.content" config="simple" :height="400" />
+                </el-tab-pane>
+                <el-tab-pane label="视频" name="c">视频</el-tab-pane>
+                <el-tab-pane label="其他" name="d">其他</el-tab-pane>
+            </el-tabs>
         </el-form>
         <span slot="footer">
             <el-button @click="handleClose">取消</el-button>
@@ -48,15 +61,20 @@
 
 <script>
 import config from '@/config';
-import api from '@/api/usr/student';
+import api from '@/api/usr/course';
+import Tinymce from '@/components/tinymce/index.vue';
 import { rules } from '@/utils/rivers';
 import { createNamespacedHelpers } from 'vuex';
 
-const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('student');
+const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('course');
 
 const fields = {
     id: '',
     name: '',
+    dateRange: '',
+    num1: undefined,
+    num2: undefined,
+    price: 0,
     code: '',
     course: [],
     message: '',
@@ -65,9 +83,13 @@ const fields = {
 };
 
 export default {
+    components: {
+        Tinymce,
+    },
     data() {
         const self = this;
         return {
+            activeName: 'a',
             uploadUrl: config.server.upload,
             saveBusy: false,
             form: {
@@ -159,6 +181,10 @@ export default {
 </script>
 
 <style lang="less" module>
+.main {
+    line-height: 1;
+}
+
 .level :global(.el-form-item__content) {
     margin-left: 0 !important;
 }

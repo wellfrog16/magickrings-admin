@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import api from '@/api/usr/student';
+import api from '@/api/usr/course';
 import { createNamespacedHelpers } from 'vuex';
 
-const { mapState, mapMutations } = createNamespacedHelpers('student');
+const { mapState, mapMutations } = createNamespacedHelpers('course');
 
 export default {
     data() {

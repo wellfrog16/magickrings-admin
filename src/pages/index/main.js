@@ -16,7 +16,7 @@ import '@/directive';
 Vue.config.productionTip = false;
 
 // 插件
-Vue.use(ElementUI, { size: 'small', zIndex: 2000 });
+Vue.use(ElementUI, { size: 'small', zIndex: 800 });
 
 new Vue({
     router,
