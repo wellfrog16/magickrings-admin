@@ -8,6 +8,7 @@ import student from './modules/student';
 import course from './modules/course';
 import member from './modules/member';
 import permission from './modules/permission';
+import category from './modules/category';
 
 Vue.use(Vuex);
 
@@ -36,5 +37,6 @@ export default new Vuex.Store({
         course,
         member,
         permission,
+        category,
     },
 });

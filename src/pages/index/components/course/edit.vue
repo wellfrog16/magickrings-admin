@@ -11,7 +11,7 @@
             <el-tabs v-model="activeName">
                 <el-tab-pane label="基础信息" name="a">
                     <el-form-item prop="name" label="课程名称">
-                        <el-input v-model="form.fields.name" minlength="1" maxlength="20" />
+                        <el-input v-model="form.fields.name" minlength="1" maxlength="20" show-word-limit />
                     </el-form-item>
                     <el-form-item prop="dateRange" label="有效期">
                         <el-date-picker
@@ -22,15 +22,21 @@
                             end-placeholder="结束日期">
                         </el-date-picker>
                     </el-form-item>
-                    <el-form-item prop="code" label="人数">
-                        <el-input-number v-model="form.fields.num1" :min="0" controls-position="right" placeholder="剩余"></el-input-number> /
-                        <el-input-number v-model="form.fields.num2" :min="1" controls-position="right" placeholder="总人数"></el-input-number>
+                    <el-form-item prop="total" label="人数">
+                        <el-input-number v-model="form.fields.remaining" :min="0" controls-position="right" placeholder="剩余"></el-input-number> /
+                        <el-input-number v-model="form.fields.total" :min="1" controls-position="right" placeholder="总人数"></el-input-number>
                     </el-form-item>
-                    <el-form-item prop="code" label="价格">
+                    <el-form-item prop="price" label="价格">
                         <el-input-number v-model="form.fields.price" :min="0" label="价格" :controls="false"></el-input-number>
                     </el-form-item>
                     <el-form-item prop="description" label="简述">
-                        <el-input v-model="form.fields.description" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" />
+                        <el-input
+                            v-model="form.fields.description"
+                            type="textarea"
+                            :autosize="{ minRows: 4, maxRows: 8}"
+                            maxlength="100"
+                            show-word-limit
+                        />
                     </el-form-item>
                     <el-form-item prop="photo" label="照片">
                         <el-upload
@@ -48,8 +54,12 @@
                 <el-tab-pane label="详细描述" name="b">
                     <tinymce v-model="form.fields.content" config="simple" :height="400" />
                 </el-tab-pane>
-                <el-tab-pane label="视频" name="c">视频</el-tab-pane>
-                <el-tab-pane label="其他" name="d">其他</el-tab-pane>
+                <el-tab-pane label="视频" name="c">
+                    <el-form-item prop="videoUrl" label="视频地址">
+                        <el-input v-model="form.fields.videoUrl" minlength="1" maxlength="20" />
+                    </el-form-item>
+                </el-tab-pane>
+                <!-- <el-tab-pane label="其他" name="d">其他</el-tab-pane> -->
             </el-tabs>
         </el-form>
         <span slot="footer">
@@ -72,14 +82,12 @@ const fields = {
     id: '',
     name: '',
     dateRange: '',
-    num1: undefined,
-    num2: undefined,
+    remaining: undefined,
+    total: undefined,
     price: 0,
-    code: '',
-    course: [],
-    message: '',
+    description: '',
     photo: '',
-    level: 0,
+    videoUrl: '',
 };
 
 export default {
@@ -95,11 +103,10 @@ export default {
             form: {
                 fields: self.createFields(),
                 rules: {
-                    ...rules.noEmpty({ key: 'name', message: '学员名称不能为空' }),
-                    ...rules.noEmpty({ key: 'code', message: '证书编号不能为空' }),
+                    ...rules.noEmpty({ key: 'name', message: '课程名称不能为空' }),
                     ...rules.noEmpty({ key: 'photo', message: '请上传照片' }),
                     ...rules.check({
-                        key: 'message', message: '描述内容长度不能超过100', max: 100,
+                        key: 'description', message: '简述内容长度不能超过100', max: 100,
                     }),
                 },
             },
