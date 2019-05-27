@@ -1,7 +1,7 @@
 <template>
     <el-row :gutter="10">
         <el-col :span="6" v-for="item in list" :key="item.id">
-            <x-category :name="item.name" :children="item.children" :class="$style.item" />
+            <x-category :id="item.id" :name="item.name" :children="item.children" :class="$style.item" />
         </el-col>
     </el-row>
 </template>
@@ -9,6 +9,9 @@
 <script>
 import api from '@/api/usr/category';
 import XCategory from '#index/components/category/index.vue';
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapState } = createNamespacedHelpers('category');
 
 export default {
     components: {
@@ -18,6 +21,14 @@ export default {
         return {
             list: [],
         };
+    },
+    computed: {
+        ...mapState(['overdue']),
+    },
+    watch: {
+        overdue() {
+            this.loadList();
+        },
     },
     mounted() {
         this.loadList();

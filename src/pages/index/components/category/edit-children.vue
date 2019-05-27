@@ -9,7 +9,7 @@
         top="50px"
     >
         <el-form ref="form" :model="form.fields" :rules="form.rules" label-width="50px" v-loading="saveBusy">
-            <el-form-item prop="name" label="姓名">
+            <el-form-item prop="name" label="名称">
                 <el-input v-model.trim="form.fields.name" />
             </el-form-item>
         </el-form>
@@ -51,7 +51,7 @@ export default {
         },
     },
     computed: {
-        ...mapState(['editChildrenVisible']),
+        ...mapState(['editChildrenVisible', 'activeId']),
         title() {
             return this.form.fields.id === 0 ? '新建' : '编辑';
         },
@@ -66,13 +66,13 @@ export default {
 
         // 关闭，保存中禁止关闭
         handleClose() {
-            !this.saveBusy && this.setState({ editVisible: false });
+            !this.saveBusy && this.setState({ editChildrenVisible: false });
             return !this.saveBusy;
         },
 
         // 打卡dialog时，更新数据
         async update() {
-            if (this.activeRow.guid) {
+            if (this.activeRow.id) {
                 // 这里实际开发需要去请求数据并更新，现在用行数据临时更新
                 await api.detail();
                 this.form.fields = { ...this.activeRow };
@@ -94,12 +94,12 @@ export default {
             this.saveBusy = true;
 
             // 更新列表（非刷新获取，仅前端根据当前数据更新）
-            if (this.form.fields.guid) {
+            if (this.form.fields.id) {
                 // 远程更新
-                await api.update(this.form.fields);
+                await api.appendChildren(this.activeId, this.form.fields);
             } else {
                 // 远程写入
-                await api.insert(this.form.fields);
+                await api.appendChildren(this.activeId, this.form.fields);
             }
 
             this.$nextTick(() => {

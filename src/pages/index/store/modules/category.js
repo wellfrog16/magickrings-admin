@@ -13,6 +13,7 @@ export default {
         overdue: false, // 数据是否过期，是则立刻刷新重新拉取
         editChildrenVisible: false, // 子信息组件显示控制
         activeName: '', // 当前分类名称
+        activeId: 0, // 当前分类id
     },
     mutations: {
         setState: (state, payload) => cstore.mutations.setState(state, payload),
