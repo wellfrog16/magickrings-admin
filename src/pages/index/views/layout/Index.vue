@@ -55,8 +55,33 @@ export default {
             return this.$route.matched.filter(item => !(item.meta && item.meta.hidden) && (item.meta && item.meta.title !== '首页'));
         },
         defaultActive() {
-            const matched = [...this.$route.matched];
-            return matched.reverse().find(item => !(item.meta && item.meta.hidden)).path;
+            let path = '';
+
+            // 如果是路由带params跳转过来，找到原始的path
+            // 菜单独占params参数路径，其他带参数必须使用query才能保证此处活动路由判断正确
+            // 此功能用于左侧菜单带参数重定向
+            const {
+                params,
+                redirectedFrom,
+                meta,
+            } = this.$route;
+
+            const keys = Object.keys(params);
+            if (keys.length > 0) {
+                if (redirectedFrom) {
+                    path = redirectedFrom;
+                } else {
+                    const param = params[keys[0]];
+                    path = meta.path[param];
+                }
+            } else {
+                const matched = [...this.$route.matched];
+                ({ path } = matched.reverse().find(item => !(item.meta && item.meta.hidden)));
+            }
+
+            // console.log(this.$route);
+            // console.log(path);
+            return path;
         },
     },
     mounted() {

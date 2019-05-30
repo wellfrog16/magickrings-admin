@@ -9,7 +9,9 @@ const detail = params => axios.get(base, { params }).then(res => res.data);
 const insert = params => axios.post(base, params).then(res => res.data);
 const update = params => axios.put(`${base}/${params.id}`, params).then(res => res.data);
 const appendChildren = (id, params) => axios.post(`${base}/${id}/children`, params).then(res => res.data);
+const modifyChildren = (id, params) => axios.put(`${base}/${id}/children`, params).then(res => res.data);
 const removeChildren = (id, childrenId) => axios.delete(`${base}/${id}/children/${childrenId}`).then(res => res.data);
+const listChildren = id => axios.get(`${base}/${id}/children`).then(res => res.data);
 
 export default {
     list,
@@ -18,4 +20,6 @@ export default {
     update,
     appendChildren,
     removeChildren,
+    modifyChildren,
+    listChildren,
 };

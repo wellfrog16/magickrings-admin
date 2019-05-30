@@ -11,7 +11,7 @@ import api from '@/api/usr/category';
 import XCategory from '#index/components/category/index.vue';
 import { createNamespacedHelpers } from 'vuex';
 
-const { mapState } = createNamespacedHelpers('category');
+const { mapState, mapMutations } = createNamespacedHelpers('category');
 
 export default {
     components: {
@@ -34,9 +34,15 @@ export default {
         this.loadList();
     },
     methods: {
+        ...mapMutations(['setState']),
+
         async loadList() {
+            this.setState({ loading: true });
+
             const res = await api.list();
             this.list = [...res.list];
+
+            this.$nextTick(() => this.setState({ loading: false, overdue: false }));
         },
     },
 };

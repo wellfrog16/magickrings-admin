@@ -46,12 +46,12 @@ export default {
         };
     },
     watch: {
-        editVisible(val) {
+        editChildrenVisible(val) {
             val && this.update();
         },
     },
     computed: {
-        ...mapState(['editChildrenVisible', 'activeId']),
+        ...mapState(['editChildrenVisible', 'activeRow', 'activeId']),
         title() {
             return this.form.fields.id === 0 ? '新建' : '编辑';
         },
@@ -71,10 +71,11 @@ export default {
         },
 
         // 打卡dialog时，更新数据
-        async update() {
+        update() {
             if (this.activeRow.id) {
+                console.log(this.activeRow.id);
                 // 这里实际开发需要去请求数据并更新，现在用行数据临时更新
-                await api.detail();
+                // await api.detail();
                 this.form.fields = { ...this.activeRow };
             } else {
                 this.form.fields = this.createFields();
@@ -96,7 +97,7 @@ export default {
             // 更新列表（非刷新获取，仅前端根据当前数据更新）
             if (this.form.fields.id) {
                 // 远程更新
-                await api.appendChildren(this.activeId, this.form.fields);
+                await api.modifyChildren(this.activeId, this.form.fields);
             } else {
                 // 远程写入
                 await api.appendChildren(this.activeId, this.form.fields);

@@ -8,8 +8,8 @@
             <li v-for="item in children" :key="item.id">
                 <span>{{ item.name }}</span>
                 <div :class="$style.handle">
-                    <el-link :underline="false" @click="handleEdit"><i class="el-icon-edit" /></el-link>
-                    <el-link :underline="false" @click="handleDelete"><i class="el-icon-delete" /></el-link>
+                    <el-link :underline="false" @click="handleEdit(item)"><i class="el-icon-edit" /></el-link>
+                    <el-link :underline="false" @click="handleDelete(item)"><i class="el-icon-delete" /></el-link>
                 </div>
             </li>
         </ul>
@@ -31,39 +31,37 @@ export default {
     computed: {
         ...mapState(['filters', 'overdue']),
     },
-    mounted() {
-        // console.log(this.children);
-    },
     methods: {
         ...mapMutations(['setState']),
 
         // 新建
         handleCreate() {
-            this.setState({ activeId: this.id, editChildrenVisible: true });
+            this.setState({ activeRow: null });
+            this.setState({ activeId: this.id, activeRow: {}, editChildrenVisible: true });
         },
 
         // 编辑
-        handleEdit(activeIndex) {
-            this.setState({ activeIndex, editVisible: true });
+        handleEdit(activeRow) {
+            this.setState({ activeId: this.id, activeRow, editChildrenVisible: true });
         },
 
         // 删除确认
-        handleDelete(activeIndex, row) {
+        handleDelete(activeRow) {
             this.$confirm('确认要删除这条数据吗', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning',
             }).then(() => {
-                this.remove(activeIndex, row);
+                this.removeChildren(activeRow);
             }).catch(() => {});
         },
 
         // 删除
-        async remove(activeIndex, row) {
-            this.setState({ activeIndex, loading: true });
+        async removeChildren(activeRow) {
+            this.setState({ loading: true });
 
             // 远程删除
-            await api.remove({ guid: row.guid });
+            await api.removeChildren(this.id, activeRow.id);
 
             this.$nextTick(() => this.setState({ loading: false, overdue: true }));
         },

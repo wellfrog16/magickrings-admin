@@ -40,6 +40,7 @@ router.beforeEach((to, from, next) => {
             // 因此这里增加to.name判断（每个路由都需要设置name），如果没有name表示没有这个路由，也就代表没有权限
             next();
         } else {
+            console.log(to.path);
             // console.log('没有权限，带去没有权限的页面');
             next({ path: '/401' });
         }

@@ -10,10 +10,10 @@
     >
         <el-form ref="form" :model="form.fields" :rules="form.rules" label-width="80px" v-loading="saveBusy">
             <el-form-item prop="name" label="学员姓名">
-                <el-input v-model="form.fields.name" minlength="1" maxlength="20" />
+                <el-input v-model="form.fields.name" minlength="1" maxlength="20" show-word-limit />
             </el-form-item>
             <el-form-item prop="code" label="证书编号">
-                <el-input v-model="form.fields.code" minlength="1" maxlength="40" />
+                <el-input v-model="form.fields.code" minlength="1" maxlength="40" show-word-limit />
             </el-form-item>
             <el-form-item prop="course" label="课程">
                 <el-checkbox-group v-model="form.fields.course">
@@ -24,7 +24,7 @@
                 <el-rate v-model="form.fields.level"></el-rate>
             </el-form-item>
             <el-form-item prop="message" label="简述">
-                <el-input v-model="form.fields.message" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" />
+                <el-input v-model="form.fields.message" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" maxlength="100" show-word-limit />
             </el-form-item>
             <el-form-item prop="photo" label="照片">
                 <el-upload
@@ -76,9 +76,6 @@ export default {
                     ...rules.noEmpty({ key: 'name', message: '学员名称不能为空' }),
                     ...rules.noEmpty({ key: 'code', message: '证书编号不能为空' }),
                     ...rules.noEmpty({ key: 'photo', message: '请上传照片' }),
-                    ...rules.check({
-                        key: 'message', message: '描述内容长度不能超过100', max: 100,
-                    }),
                 },
             },
         };

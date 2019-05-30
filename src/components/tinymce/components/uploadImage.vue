@@ -4,7 +4,8 @@
         :before-close="handleClose"
         class="or-dialog"
         :custom-class="$style.dialog"
-        top="0vh"
+        append-to-body
+        top="0"
     >
         <el-upload
             :multiple="false"
