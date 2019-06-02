@@ -9,7 +9,16 @@
         @selection-change="handleSelectionChange"
     >
         <el-table-column type="selection" width="60" align="center" />
+        <el-table-column prop="id" label="产品ID" width="80" />
+        <el-table-column prop="status" label="产品状态" width="120">
+            <template slot-scope="scope">
+                <el-tag>{{ scope.row.status }}</el-tag>
+            </template>
+        </el-table-column>
+        <el-table-column prop="categoryName" label="产品分类" width="120" />
         <el-table-column prop="name" label="产品名称" width="120" />
+        <el-table-column prop="price" label="价格" width="120" align="right" />
+        <el-table-column prop="message" label="简介" show-overflow-tooltip />
         <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
                 <el-button @click="handleEdit(scope.$index)" type="primary" size="mini" icon="el-icon-edit" />

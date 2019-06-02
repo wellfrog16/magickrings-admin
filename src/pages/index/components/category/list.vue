@@ -32,6 +32,7 @@ export default {
     },
     mounted() {
         this.loadList();
+        // api.insert({ name: '招财魔法', children: [] });
     },
     methods: {
         ...mapMutations(['setState']),

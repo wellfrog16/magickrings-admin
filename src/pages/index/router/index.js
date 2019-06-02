@@ -79,25 +79,25 @@ const asyncRoutes = [
             },
         ],
     },
-    {
-        path: '/ui',
-        component: Layout,
-        redirect: { path: '/ui/form' },
-        meta: {
-            title: '组件',
-            icon: 'menu-fix-icon fas fa-puzzle-piece fa-lg fa-fw',
-        },
-        children: [
-            {
-                path: 'form',
-                component: () => import('../views/ui/Form.vue'),
-                meta: {
-                    title: '基础表格和表单',
-                    icon: 'menu-fix-icon fab fa-wpforms fa-lg fa-fw',
-                },
-            },
-        ],
-    },
+    // {
+    //     path: '/ui',
+    //     component: Layout,
+    //     redirect: { path: '/ui/form' },
+    //     meta: {
+    //         title: '组件',
+    //         icon: 'menu-fix-icon fas fa-puzzle-piece fa-lg fa-fw',
+    //     },
+    //     children: [
+    //         {
+    //             path: 'form',
+    //             component: () => import('../views/ui/Form.vue'),
+    //             meta: {
+    //                 title: '基础表格和表单',
+    //                 icon: 'menu-fix-icon fab fa-wpforms fa-lg fa-fw',
+    //             },
+    //         },
+    //     ],
+    // },
     {
         path: '/product',
         component: Layout,

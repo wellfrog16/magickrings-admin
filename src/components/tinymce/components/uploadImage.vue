@@ -8,6 +8,7 @@
         top="0"
     >
         <el-upload
+            name="avatar"
             :multiple="false"
             :file-list="fileList"
             :show-file-list="true"
@@ -15,7 +16,7 @@
             :on-success="handleSuccess"
             :before-upload="beforeUpload"
             accept=".jpg,.png"
-            action="https://httpbin.org/post"
+            :action="action"
             list-type="picture-card"
         >
             <el-button type="primary">点击上传</el-button>
@@ -28,12 +29,15 @@
 </template>
 
 <script>
+import config from '@/config';
+
 export default {
     props: {
         visible: { type: Boolean, default: false },
     },
     data() {
         return {
+            action: config.server.upload,
             dialogVisible: false,
             fileList: [],
             imgList: {},
@@ -97,11 +101,12 @@ export default {
         },
 
         // 文件上传成功写入文件地址
-        handleSuccess(response, file) {
+        handleSuccess({ data }, file) {
+            const path = `${data.path}/${data.filename}`;
             Object.keys(this.imgList).forEach((key) => {
                 const item = this.imgList[key];
                 if (item.uid === file.uid) {
-                    item.url = response.files.file;
+                    item.url = `${config.server.img}/image/${path}`;
                     item.isSuccess = true;
                     this.count += 1;
                 }

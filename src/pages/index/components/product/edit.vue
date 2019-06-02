@@ -6,7 +6,7 @@
             :before-close="handleClose"
             :close-on-click-modal="false"
             append-to-body
-            width="800px"
+            width="820px"
         >
             <el-form ref="form" :model="form.fields" :rules="form.rules" label-width="80px" v-loading="saveBusy">
                 <el-tabs v-model="activeName">
@@ -54,6 +54,9 @@
                                 list-type="picture-card"
                                 :action="uploadUrl"
                                 :on-success="handleUploadSuccess"
+                                :on-remove="handleUploadRemove"
+                                :file-list="fileList"
+                                accept=".jpg,.png,.jpeg"
                             >
                                 <i class="el-icon-plus"></i>
                             </el-upload>
@@ -63,12 +66,12 @@
                         <el-tabs v-model="activeContentName" type="border-card" editable @edit="handleTabsEdit">
                             <el-tab-pane
                                 v-for="item in form.fields.contents"
-                                :key="item.title"
+                                :key="item.tabIndex"
                                 :label="item.title"
                                 :name="item.tabIndex"
                             >
                                 <el-form-item label="标题">
-                                    <el-button @click="handleOpenEditTitle(item)">修改标题</el-button>
+                                    <el-input v-model="item.title" minlength="1" maxlength="10" show-word-limit placeholder="请输入标题" />
                                 </el-form-item>
                                 <el-form-item label="内容">
                                     <tinymce v-model="item.content" :height="400" config="simple" />
@@ -86,23 +89,6 @@
             <span slot="footer">
                 <el-button @click="handleClose">取消</el-button>
                 <el-button type="primary" @click="handleSave" :loading="saveBusy">保存</el-button>
-            </span>
-        </el-dialog>
-
-        <!-- 标题修改 -->
-        <el-dialog
-            title="修改标题"
-            :visible.sync="editTitleVisible"
-            :before-close="handleeditTitleClose"
-            append-to-body
-            width="200px"
-            class="or-dialog"
-            top="0"
-        >
-            <el-input v-model="editTitle" maxlength="10" show-word-limit></el-input>
-            <span slot="footer">
-                <el-button @click="editTitleVisible = false">取消</el-button>
-                <el-button type="primary" @click="handleEditTitleSave">保存</el-button>
             </span>
         </el-dialog>
     </div>
@@ -140,12 +126,11 @@ export default {
     data() {
         const self = this;
         return {
+            fileList: [],
             childOptions: [],
             category: +this.$route.params.id,
             uploadUrl: config.server.upload,
             saveBusy: false,
-            editTitle: '',
-            editTitleVisible: false,
             status: ['hot', 'sales', 'new'],
             activeItem: {},
             activeName: 'a',
@@ -184,11 +169,6 @@ export default {
             this.childOptions = res.list.map(item => ({ label: item.name, value: item.id }));
         },
 
-        handleOpenEditTitle(item) {
-            this.activeItem = item;
-            this.editTitleVisible = true;
-        },
-
         handleTabsEdit(targetName, action) {
             if (action === 'add') {
                 const tabIndex = `index${Math.ceil(Math.random() * 100000000)}`;
@@ -219,18 +199,6 @@ export default {
             }
         },
 
-        handleEditTitleSave() {
-            this.activeItem.title = this.editTitle;
-            this.handleeditTitleClose();
-        },
-
-        handleeditTitleClose(done) {
-            this.activeItem = {};
-            this.editTitle = '';
-            this.editTitleVisible = false;
-            done && done();
-        },
-
         // 创建一个空的fileds副本
         createFields() {
             return Object.assign({ category: this.category }, fields);
@@ -244,20 +212,40 @@ export default {
 
         handleUploadSuccess({ data }) {
             const path = `${data.path}/${data.filename}`;
+            // this.form.fields.photos.push({ name: path, url: path });
             this.form.fields.photos.push(path);
+            this.fileList.push({
+                name: path,
+                url: `${config.server.img}/image/${path}`,
+            });
+        },
+
+        handleUploadRemove(file) {
+            const index = this.fileList.findIndex(item => item.name === file.name);
+            this.form.fields.photos.splice(index, 1);
+            this.fileList.splice(index, 1);
         },
 
         // 打卡dialog时，更新数据
         async update() {
+            this.activeName = 'a';
             if (this.activeRow.id) {
                 // 这里实际开发需要去请求数据并更新，现在用行数据临时更新
                 // await api.detail(this.activeRow._id);
                 this.form.fields = { ...this.activeRow };
+                this.fileList = this.form.fields.photos.map(item => ({
+                    name: item,
+                    url: `${config.server.img}/image/${item}`,
+                }));
             } else {
                 this.form.fields = this.createFields();
             }
             this.$nextTick(() => this.$refs.form.clearValidate());
         },
+
+        // formatData(data) {
+        //     data.photos.forEach(item => ({ name: item.url, url: item }))
+        // },
 
         // 保存信息
         handleSave() {

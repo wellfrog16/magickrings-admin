@@ -1,72 +1,118 @@
 <template>
-    <el-dialog
-        title="课程"
-        :visible.sync="editVisible"
-        :before-close="handleClose"
-        :close-on-click-modal="false"
-        :custom-class="$style.main"
-        width="1000px"
-    >
-        <el-form ref="form" :model="form.fields" :rules="form.rules" label-width="80px" v-loading="saveBusy">
-            <el-tabs v-model="activeName">
-                <el-tab-pane label="基础信息" name="a">
-                    <el-form-item prop="name" label="课程名称">
-                        <el-input v-model="form.fields.name" minlength="1" maxlength="20" show-word-limit />
-                    </el-form-item>
-                    <el-form-item prop="dateRange" label="有效期">
-                        <el-date-picker
-                            v-model="form.fields.dateRange"
-                            type="daterange"
-                            range-separator="至"
-                            start-placeholder="开始日期"
-                            end-placeholder="结束日期">
-                        </el-date-picker>
-                    </el-form-item>
-                    <el-form-item prop="total" label="人数">
-                        <el-input-number v-model="form.fields.remaining" :min="0" controls-position="right" placeholder="剩余"></el-input-number> /
-                        <el-input-number v-model="form.fields.total" :min="1" controls-position="right" placeholder="总人数"></el-input-number>
-                    </el-form-item>
-                    <el-form-item prop="price" label="价格">
-                        <el-input-number v-model="form.fields.price" :min="0" label="价格" :controls="false"></el-input-number>
-                    </el-form-item>
-                    <el-form-item prop="description" label="简述">
-                        <el-input
-                            v-model="form.fields.description"
-                            type="textarea"
-                            :autosize="{ minRows: 4, maxRows: 8}"
-                            maxlength="100"
-                            show-word-limit
-                        />
-                    </el-form-item>
-                    <el-form-item prop="photo" label="照片">
-                        <el-upload
-                            name="avatar"
-                            :class="$style['photo-uploader']"
-                            :action="uploadUrl"
-                            :show-file-list="false"
-                            :on-success="handleUploadSuccess"
-                        >
-                            <img v-if="form.fields.photo" :src="photoUrl" class="avatar">
-                            <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
-                        </el-upload>
-                    </el-form-item>
-                </el-tab-pane>
-                <el-tab-pane label="详细描述" name="b">
-                    <tinymce v-model="form.fields.content" config="simple" :height="400" />
-                </el-tab-pane>
-                <el-tab-pane label="视频" name="c">
-                    <el-form-item prop="videoUrl" label="视频地址">
-                        <el-input v-model="form.fields.videoUrl" minlength="1" maxlength="20" />
-                    </el-form-item>
-                </el-tab-pane>
-                <!-- <el-tab-pane label="其他" name="d">其他</el-tab-pane> -->
-            </el-tabs>
-        </el-form>
-        <span slot="footer">
-            <el-button @click="handleClose">取消</el-button>
-            <el-button type="primary" @click="handleSave" :loading="saveBusy">保存</el-button>
-        </span>
-    </el-dialog>
+    <div>
+        <el-dialog
+            title="产品信息"
+            :visible.sync="editVisible"
+            :before-close="handleClose"
+            :close-on-click-modal="false"
+            append-to-body
+            width="820px"
+            top="5vh"
+        >
+            <el-form ref="form" :model="form.fields" :rules="form.rules" label-width="90px" v-loading="saveBusy">
+                <el-tabs v-model="activeName">
+                    <el-tab-pane label="基础信息" name="a">
+                        <el-form-item prop="name" label="课程名称">
+                            <el-input v-model="form.fields.name" minlength="1" maxlength="20" show-word-limit />
+                        </el-form-item>
+                        <el-form-item prop="dateRange" label="有效期">
+                            <el-date-picker
+                                v-model="form.fields.dateRange"
+                                type="daterange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期">
+                            </el-date-picker>
+                        </el-form-item>
+                        <el-form-item prop="total" label="人数">
+                            <el-input-number v-model="form.fields.remaining" :min="0" controls-position="right" placeholder="剩余"></el-input-number> /
+                            <el-input-number v-model="form.fields.total" :min="1" controls-position="right" placeholder="总人数"></el-input-number>
+                        </el-form-item>
+                        <el-form-item prop="status" label="课程状态">
+                            <el-radio-group v-model="form.fields.status">
+                                <el-radio-button v-for="item in status" :label="item" :key="item" />
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item prop="price" label="价格">
+                            <el-input v-model="form.fields.price" />
+                        </el-form-item>
+                        <el-form-item prop="photo" label="照片">
+                            <el-upload
+                                name="avatar"
+                                :class="$style['photo-uploader']"
+                                :action="uploadUrl"
+                                :show-file-list="false"
+                                :on-success="handleUploadSuccess"
+                            >
+                                <img v-if="form.fields.photo" :src="photoUrl" class="avatar">
+                                <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
+                            </el-upload>
+                        </el-form-item>
+                        <el-form-item prop="url" label="视频地址">
+                            <el-input v-model="form.fields.url">
+                                <template slot="prepend">Http://</template>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item prop="message" label="简述">
+                            <el-input
+                                v-model="form.fields.message"
+                                type="textarea"
+                                :autosize="{ minRows: 4, maxRows: 8}"
+                                maxlength="100"
+                                show-word-limit
+                            />
+                        </el-form-item>
+                    </el-tab-pane>
+                    <el-tab-pane label="信息2" name="b">
+                        <el-form-item prop="name" label="课程名称2">
+                            <el-input v-model="form.fields.name" minlength="1" maxlength="20" show-word-limit />
+                        </el-form-item>
+                        <el-form-item prop="name" label="副标题">
+                            <el-input v-model="form.fields.name" minlength="1" maxlength="80" show-word-limit />
+                        </el-form-item>
+                        <el-form-item prop="photo" label="照片">
+                            <el-upload
+                                name="avatar"
+                                :class="$style['photo-uploader']"
+                                :action="uploadUrl"
+                                :show-file-list="false"
+                                :on-success="handleUploadSuccess"
+                            >
+                                <img v-if="form.fields.photo" :src="photoUrl" class="avatar">
+                                <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
+                            </el-upload>
+                        </el-form-item>
+                    </el-tab-pane>
+                    <el-tab-pane label="分类描述" name="c">
+                        <el-tabs v-model="activeContentName" type="border-card" editable @edit="handleTabsEdit">
+                            <el-tab-pane
+                                v-for="item in form.fields.contents"
+                                :key="item.tabIndex"
+                                :label="item.title"
+                                :name="item.tabIndex"
+                            >
+                                <el-form-item label="标题">
+                                    <el-input v-model="item.title" minlength="1" maxlength="10" show-word-limit placeholder="请输入标题" />
+                                </el-form-item>
+                                <el-form-item label="内容">
+                                    <tinymce v-model="item.content" :height="400" config="simple" />
+                                </el-form-item>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </el-tab-pane>
+                    <el-tab-pane label="课程描述" name="d">
+                        <el-form-item prop="relate" label="课程介绍">
+                            <tinymce v-model="form.fields.content" :height="400" config="simple" />
+                        </el-form-item>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-form>
+            <span slot="footer">
+                <el-button @click="handleClose">取消</el-button>
+                <el-button type="primary" @click="handleSave" :loading="saveBusy">保存</el-button>
+            </span>
+        </el-dialog>
+    </div>
 </template>
 
 <script>
@@ -80,14 +126,17 @@ const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('course')
 
 const fields = {
     id: '',
+    child: '',
     name: '',
-    dateRange: '',
-    remaining: undefined,
-    total: undefined,
-    price: 0,
-    description: '',
-    photo: '',
-    videoUrl: '',
+    status: '',
+    price: '',
+    url: '',
+    message: '',
+    photos: [],
+    contents: [
+        { title: '标题', content: '', tabIndex: 'default' },
+    ],
+    relate: '',
 };
 
 export default {
@@ -97,17 +146,19 @@ export default {
     data() {
         const self = this;
         return {
-            activeName: 'a',
+            fileList: [],
+            childOptions: [],
+            category: +this.$route.params.id,
             uploadUrl: config.server.upload,
             saveBusy: false,
+            status: ['hot', 'sales', 'new'],
+            activeItem: {},
+            activeName: 'a',
+            activeContentName: 'default',
             form: {
                 fields: self.createFields(),
                 rules: {
-                    ...rules.noEmpty({ key: 'name', message: '课程名称不能为空' }),
-                    ...rules.noEmpty({ key: 'photo', message: '请上传照片' }),
-                    ...rules.check({
-                        key: 'description', message: '简述内容长度不能超过100', max: 100,
-                    }),
+                    ...rules.noEmpty({ key: 'name', message: '学员名称不能为空' }),
                 },
             },
         };
@@ -129,9 +180,39 @@ export default {
     methods: {
         ...mapMutations(['setState']),
 
+        handleTabsEdit(targetName, action) {
+            if (action === 'add') {
+                const tabIndex = `index${Math.ceil(Math.random() * 100000000)}`;
+                const title = `新分类${Math.ceil(Math.random() * 1000)}`;
+                this.form.fields.contents.push({
+                    title,
+                    content: '',
+                    tabIndex,
+                });
+                this.activeContentName = tabIndex;
+            }
+
+            if (action === 'remove' && this.activeContentName !== 'default') {
+                const tabs = [...this.form.fields.contents];
+                if (this.activeContentName === targetName) {
+                    tabs.forEach((tab, index) => {
+                        // console.log(tab.tabIndex, targetName);
+                        if (tab.tabIndex === targetName) {
+                            const nextTab = tabs[index + 1] || tabs[index - 1];
+                            if (nextTab) {
+                                this.activeContentName = nextTab.tabIndex;
+                            }
+                        }
+                    });
+                }
+
+                this.form.fields.contents = tabs.filter(tab => tab.tabIndex !== targetName);
+            }
+        },
+
         // 创建一个空的fileds副本
         createFields() {
-            return Object.assign({}, fields);
+            return Object.assign({ category: this.category }, fields);
         },
 
         // 关闭，保存中禁止关闭
@@ -142,20 +223,40 @@ export default {
 
         handleUploadSuccess({ data }) {
             const path = `${data.path}/${data.filename}`;
-            this.form.fields.photo = path;
+            // this.form.fields.photos.push({ name: path, url: path });
+            this.form.fields.photos.push(path);
+            this.fileList.push({
+                name: path,
+                url: `${config.server.img}/image/${path}`,
+            });
+        },
+
+        handleUploadRemove(file) {
+            const index = this.fileList.findIndex(item => item.name === file.name);
+            this.form.fields.photos.splice(index, 1);
+            this.fileList.splice(index, 1);
         },
 
         // 打卡dialog时，更新数据
         async update() {
+            this.activeName = 'a';
             if (this.activeRow.id) {
                 // 这里实际开发需要去请求数据并更新，现在用行数据临时更新
                 // await api.detail(this.activeRow._id);
                 this.form.fields = { ...this.activeRow };
+                this.fileList = this.form.fields.photos.map(item => ({
+                    name: item,
+                    url: `${config.server.img}/image/${item}`,
+                }));
             } else {
                 this.form.fields = this.createFields();
             }
             this.$nextTick(() => this.$refs.form.clearValidate());
         },
+
+        // formatData(data) {
+        //     data.photos.forEach(item => ({ name: item.url, url: item }))
+        // },
 
         // 保存信息
         handleSave() {
@@ -188,10 +289,6 @@ export default {
 </script>
 
 <style lang="less" module>
-.main {
-    line-height: 1;
-}
-
 .level :global(.el-form-item__content) {
     margin-left: 0 !important;
 }

@@ -9,14 +9,7 @@
         @selection-change="handleSelectionChange"
     >
         <el-table-column type="selection" width="60" align="center" />
-        <el-table-column prop="name" label="学员姓名" width="120" />
-        <el-table-column prop="code" label="证书编号" width="200" />
-        <el-table-column prop="level" label="等级" width="200">
-            <template slot-scope="scope"><el-rate v-model="scope.row.level" disabled /></template>
-        </el-table-column>
-        <el-table-column prop="course" label="课程">
-            <template slot-scope="scope">{{ scope.row.course.join('，') }}</template>
-        </el-table-column>
+        <el-table-column prop="name" label="课程名称" />
         <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
                 <el-button @click="handleEdit(scope.$index)" type="primary" size="mini" icon="el-icon-edit" />
