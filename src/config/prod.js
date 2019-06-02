@@ -1,6 +1,6 @@
 const config = {
     server: {
-        api: 'localhost:8080',
+        api: 'http://api.dreamersky.com',
         upload: 'http://api.dreamersky.com/service/file/upload',
         img: 'http://image.dreamersky.com',
     },
