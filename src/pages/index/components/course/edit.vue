@@ -174,7 +174,7 @@ export default {
 
         // 图片地址
         photoUrl() {
-            return `${config.server.img}/image/${this.form.fields.photo}`;
+            return `${config.server.img}/${this.form.fields.photo}`;
         },
     },
     methods: {
@@ -227,7 +227,7 @@ export default {
             this.form.fields.photos.push(path);
             this.fileList.push({
                 name: path,
-                url: `${config.server.img}/image/${path}`,
+                url: `${config.server.img}/${path}`,
             });
         },
 
@@ -246,7 +246,7 @@ export default {
                 this.form.fields = { ...this.activeRow };
                 this.fileList = this.form.fields.photos.map(item => ({
                     name: item,
-                    url: `${config.server.img}/image/${item}`,
+                    url: `${config.server.img}/${item}`,
                 }));
             } else {
                 this.form.fields = this.createFields();

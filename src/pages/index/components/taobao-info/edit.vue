@@ -89,7 +89,7 @@ export default {
 
         // 图片地址
         photoUrl() {
-            return `${config.server.img}/image/${this.form.fields.photo}`;
+            return `${config.server.img}/${this.form.fields.photo}`;
         },
     },
     methods: {

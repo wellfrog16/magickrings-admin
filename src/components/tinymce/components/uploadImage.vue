@@ -106,7 +106,7 @@ export default {
             Object.keys(this.imgList).forEach((key) => {
                 const item = this.imgList[key];
                 if (item.uid === file.uid) {
-                    item.url = `${config.server.img}/image/${path}`;
+                    item.url = `${config.server.img}/${path}`;
                     item.isSuccess = true;
                     this.count += 1;
                 }
