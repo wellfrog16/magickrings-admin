@@ -5,6 +5,7 @@ import Vuex from 'vuex';
 import baseForm from './modules/base-form';
 import taobaoInfo from './modules/taobao-info';
 import student from './modules/student';
+import teacher from './modules/teacher';
 import course from './modules/course';
 import member from './modules/member';
 import permission from './modules/permission';
@@ -40,5 +41,6 @@ export default new Vuex.Store({
         permission,
         category,
         product,
+        teacher,
     },
 });

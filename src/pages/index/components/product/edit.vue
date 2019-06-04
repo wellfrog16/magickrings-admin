@@ -157,15 +157,12 @@ export default {
             return `${config.server.img}/${this.form.fields.photo}`;
         },
     },
-    mounted() {
-        this.loadChildren();
-    },
     methods: {
         ...mapMutations(['setState']),
 
         // 加载子分类
         async loadChildren() {
-            const res = await apiCategory.listChildren(this.category);
+            const res = await apiCategory.listChildren(+this.$route.params.id);
             this.childOptions = res.list.map(item => ({ label: item.name, value: item.id }));
         },
 
@@ -229,6 +226,7 @@ export default {
         // 打卡dialog时，更新数据
         async update() {
             this.activeName = 'a';
+            this.loadChildren();
             if (this.activeRow.id) {
                 // 这里实际开发需要去请求数据并更新，现在用行数据临时更新
                 // await api.detail(this.activeRow._id);
@@ -238,6 +236,7 @@ export default {
                     url: `${config.server.img}/${item}`,
                 }));
             } else {
+                this.fileList = [];
                 this.form.fields = this.createFields();
             }
             this.$nextTick(() => this.$refs.form.clearValidate());

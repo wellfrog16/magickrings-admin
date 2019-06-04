@@ -99,6 +99,25 @@ const asyncRoutes = [
     //     ],
     // },
     {
+        path: '/teacher',
+        component: Layout,
+        redirect: { path: '/teacher/index' },
+        meta: {
+            title: '导师信息',
+            icon: 'el-icon-document',
+        },
+        children: [
+            {
+                path: 'index',
+                component: () => import('../views/teacher/Index.vue'),
+                meta: {
+                    title: '导师信息页面',
+                    hidden: true,
+                },
+            },
+        ],
+    },
+    {
         path: '/product',
         component: Layout,
         redirect: { path: '/product/category' },
