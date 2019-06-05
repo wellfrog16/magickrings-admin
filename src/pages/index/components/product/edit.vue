@@ -131,7 +131,7 @@ export default {
             category: +this.$route.params.id,
             uploadUrl: config.server.upload,
             saveBusy: false,
-            status: ['hot', 'sales', 'new'],
+            status: ['hot', 'sale', 'new'],
             activeItem: {},
             activeName: 'a',
             activeContentName: 'default',

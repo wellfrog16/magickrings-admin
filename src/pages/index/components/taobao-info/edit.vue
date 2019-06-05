@@ -16,7 +16,7 @@
                 <el-input v-model="form.fields.author" minlength="1" maxlength="20" />
             </el-form-item>
             <el-form-item prop="message" label="简述">
-                <el-input v-model="form.fields.message" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" />
+                <el-input v-model="form.fields.message" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" show-word-limit maxlength="100" />
             </el-form-item>
             <el-form-item prop="url" label="链接地址">
                 <el-input v-model="form.fields.url" maxlength="100" />
@@ -28,10 +28,12 @@
                     :action="uploadUrl"
                     :show-file-list="false"
                     :on-success="handleUploadSuccess"
+                    accept=".jpg,.png,.jpeg"
                 >
                     <img v-if="form.fields.photo" :src="photoUrl" class="avatar">
                     <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
                 </el-upload>
+                380 * 380 px
             </el-form-item>
         </el-form>
         <span slot="footer">
