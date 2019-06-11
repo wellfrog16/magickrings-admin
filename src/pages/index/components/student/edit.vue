@@ -37,6 +37,7 @@
                     <img v-if="form.fields.photo" :src="photoUrl" class="avatar">
                     <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
                 </el-upload>
+                120 * 120
             </el-form-item>
         </el-form>
         <span slot="footer">

@@ -2,7 +2,8 @@
     <div>
         <el-dialog
             title="产品信息"
-            :visible.sync="editVisible"
+            :visible="true"
+            v-if="editVisible"
             :before-close="handleClose"
             :close-on-click-modal="false"
             append-to-body
@@ -47,7 +48,21 @@
                             />
                         </el-form-item>
                     </el-tab-pane>
-                    <el-tab-pane label="图片组" name="b">
+                    <el-tab-pane label="封面图片" name="b">
+                        <el-form-item prop="photo" label-width="0">
+                            <el-upload
+                                name="avatar"
+                                :class="$style['photo-uploader']"
+                                :action="uploadUrl"
+                                :show-file-list="false"
+                                :on-success="handleUploadSuccess2"
+                            >
+                                <img v-if="form.fields.cover" :src="photoUrl" class="avatar">
+                                <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
+                            </el-upload>
+                        </el-form-item>
+                    </el-tab-pane>
+                    <el-tab-pane label="图片组" name="c">
                         <el-form-item prop="photo" label-width="0">
                             <el-upload
                                 name="avatar"
@@ -62,7 +77,7 @@
                             </el-upload>
                         </el-form-item>
                     </el-tab-pane>
-                    <el-tab-pane label="详细描述" name="c">
+                    <el-tab-pane label="详细描述" name="d">
                         <el-tabs v-model="activeContentName" type="border-card" editable @edit="handleTabsEdit">
                             <el-tab-pane
                                 v-for="item in form.fields.contents"
@@ -79,7 +94,7 @@
                             </el-tab-pane>
                         </el-tabs>
                     </el-tab-pane>
-                    <el-tab-pane label="设置关联" name="d">
+                    <el-tab-pane label="设置关联" name="e">
                         <el-form-item prop="relate" label="关联id">
                             <el-input v-model="form.fields.relate" minlength="1" maxlength="20" placeholder="id用英文逗号分隔，最多4个" />
                         </el-form-item>
@@ -99,6 +114,7 @@ import config from '@/config';
 import apiProduct from '@/api/usr/product';
 import apiCategory from '@/api/usr/category';
 import Tinymce from '@/components/tinymce/index.vue';
+import { $ } from '@/utils/cdn';
 import { rules } from '@/utils/rivers';
 import { createNamespacedHelpers } from 'vuex';
 
@@ -112,6 +128,7 @@ const fields = {
     price: '',
     url: '',
     message: '',
+    cover: '',
     photos: [],
     contents: [
         { title: '标题', content: '', tabIndex: 'default' },
@@ -128,7 +145,6 @@ export default {
         return {
             fileList: [],
             childOptions: [],
-            category: +this.$route.params.id,
             uploadUrl: config.server.upload,
             saveBusy: false,
             status: ['hot', 'sale', 'new'],
@@ -154,7 +170,11 @@ export default {
 
         // 图片地址
         photoUrl() {
-            return `${config.server.img}/${this.form.fields.photo}`;
+            return `${config.server.img}/${this.form.fields.cover}`;
+        },
+
+        category() {
+            return +this.$route.params.id;
         },
     },
     methods: {
@@ -198,7 +218,10 @@ export default {
 
         // 创建一个空的fileds副本
         createFields() {
-            return Object.assign({ category: this.category }, fields);
+            const aa = $.extend(true, { category: this.category }, fields);
+            // const aa = Object.assign({ category: this.category }, fields);
+            console.log(aa);
+            return aa;
         },
 
         // 关闭，保存中禁止关闭
@@ -217,6 +240,11 @@ export default {
             });
         },
 
+        handleUploadSuccess2({ data }) {
+            const path = `${data.path}/${data.filename}`;
+            this.form.fields.cover = path;
+        },
+
         handleUploadRemove(file) {
             const index = this.fileList.findIndex(item => item.name === file.name);
             this.form.fields.photos.splice(index, 1);
@@ -228,14 +256,17 @@ export default {
             this.activeName = 'a';
             this.loadChildren();
             if (this.activeRow.id) {
+                this.activeContentName = this.form.fields.contents[0].tabIndex;
                 // 这里实际开发需要去请求数据并更新，现在用行数据临时更新
                 // await api.detail(this.activeRow._id);
-                this.form.fields = { ...this.activeRow };
+                const copy = $.extend(true, {}, fields);
+                this.form.fields = $.extend(true, copy, this.activeRow);
                 this.fileList = this.form.fields.photos.map(item => ({
                     name: item,
                     url: `${config.server.img}/${item}`,
                 }));
             } else {
+                this.activeContentName = 'default';
                 this.fileList = [];
                 this.form.fields = this.createFields();
             }

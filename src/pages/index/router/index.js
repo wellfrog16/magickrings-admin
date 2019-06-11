@@ -267,6 +267,25 @@ const asyncRoutes = [
             },
         ],
     },
+    {
+        path: '/story',
+        component: Layout,
+        redirect: { path: '/story/index' },
+        meta: {
+            title: '品牌故事',
+            icon: 'el-icon-document',
+        },
+        children: [
+            {
+                path: 'index',
+                component: () => import('../views/story/Index.vue'),
+                meta: {
+                    title: '品牌故事页面',
+                    hidden: true,
+                },
+            },
+        ],
+    },
 ];
 
 const scrollBehavior = (to, from, savedPosition) => {
