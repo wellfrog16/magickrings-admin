@@ -21,9 +21,9 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 import api from '@/api/usr/category';
 import { rules } from '@/utils/rivers';
-import { createNamespacedHelpers } from 'vuex';
 
 const { mapState, mapMutations } = createNamespacedHelpers('category');
 

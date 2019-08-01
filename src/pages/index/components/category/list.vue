@@ -7,9 +7,9 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 import api from '@/api/usr/category';
 import XCategory from '#index/components/category/index.vue';
-import { createNamespacedHelpers } from 'vuex';
 
 const { mapState, mapMutations } = createNamespacedHelpers('category');
 

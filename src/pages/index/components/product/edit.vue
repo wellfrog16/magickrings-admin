@@ -110,13 +110,13 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 import config from '@/config';
 import apiProduct from '@/api/usr/product';
 import apiCategory from '@/api/usr/category';
 import Tinymce from '@/components/tinymce/index.vue';
 import { $ } from '@/utils/cdn';
 import { rules } from '@/utils/rivers';
-import { createNamespacedHelpers } from 'vuex';
 
 const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('product');
 

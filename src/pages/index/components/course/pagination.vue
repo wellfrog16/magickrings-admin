@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import api from '@/api/usr/course';
 import { createNamespacedHelpers } from 'vuex';
+import api from '@/api/usr/course';
 
 const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('course');
 

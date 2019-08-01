@@ -44,10 +44,10 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 import config from '@/config';
 import api from '@/api/usr/taobao-info';
 import { rules } from '@/utils/rivers';
-import { createNamespacedHelpers } from 'vuex';
 
 const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('taobaoInfo');
 

@@ -116,11 +116,11 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
 import config from '@/config';
 import api from '@/api/usr/course';
 import Tinymce from '@/components/tinymce/index.vue';
 import { rules } from '@/utils/rivers';
-import { createNamespacedHelpers } from 'vuex';
 
 const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('course');
 

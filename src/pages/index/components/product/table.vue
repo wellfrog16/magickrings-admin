@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import api from '@/api/usr/product';
 import { createNamespacedHelpers } from 'vuex';
+import api from '@/api/usr/product';
 
 const { mapState, mapMutations } = createNamespacedHelpers('product');
 
