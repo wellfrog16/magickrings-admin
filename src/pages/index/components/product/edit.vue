@@ -60,6 +60,7 @@
                                 <img v-if="form.fields.cover" :src="photoUrl" class="avatar">
                                 <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
                             </el-upload>
+                            设计大小：280px * 360px
                         </el-form-item>
                     </el-tab-pane>
                     <el-tab-pane label="图片组" name="c">
@@ -75,6 +76,7 @@
                             >
                                 <i class="el-icon-plus"></i>
                             </el-upload>
+                            设计大小：600px * 600px
                         </el-form-item>
                     </el-tab-pane>
                     <el-tab-pane label="详细描述" name="d">
