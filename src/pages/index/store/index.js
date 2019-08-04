@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 // 站点模块
 import baseForm from './modules/base-form';
-import taobaoInfo from './modules/taobao-info';
+import taobaoComment from './modules/taobao-comment';
 import student from './modules/student';
 import teacher from './modules/teacher';
 import course from './modules/course';
@@ -34,7 +34,7 @@ export default new Vuex.Store({
     actions,
     modules: {
         baseForm,
-        taobaoInfo,
+        taobaoComment,
         student,
         course,
         member,

@@ -46,10 +46,10 @@
 <script>
 import { createNamespacedHelpers } from 'vuex';
 import config from '@/config';
-import api from '@/api/usr/taobao-info';
+import api from '@/api/usr/taobao-comment';
 import { rules } from '@/utils/rivers';
 
-const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('taobaoInfo');
+const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('taobaoComment');
 
 const fields = {
     id: '',

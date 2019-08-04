@@ -13,9 +13,9 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import api from '@/api/usr/taobao-info';
+import api from '@/api/usr/taobao-comment';
 
-const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('taobaoInfo');
+const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('taobaoComment');
 
 export default {
     data() {

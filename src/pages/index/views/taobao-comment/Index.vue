@@ -16,18 +16,18 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import XSearch from '#index/components/taobao-info/search.vue';
-import XTable from '#index/components/taobao-info/table.vue';
-import XPagination from '#index/components/taobao-info/pagination.vue';
+import XSearch from '#index/components/taobao-comment/search.vue';
+import XTable from '#index/components/taobao-comment/table.vue';
+import XPagination from '#index/components/taobao-comment/pagination.vue';
 
-const { mapState, mapMutations } = createNamespacedHelpers('taobaoInfo');
+const { mapState, mapMutations } = createNamespacedHelpers('taobaoComment');
 
 export default {
     components: {
         XSearch,
         XTable,
         XPagination,
-        XEdit: () => import('#index/components/taobao-info/edit.vue'),
+        XEdit: () => import('#index/components/taobao-comment/edit.vue'),
     },
     computed: {
         ...mapState(['loading']),

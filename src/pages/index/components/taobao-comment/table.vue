@@ -22,9 +22,9 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-import api from '@/api/usr/taobao-info';
+import api from '@/api/usr/taobao-comment';
 
-const { mapState, mapMutations } = createNamespacedHelpers('taobaoInfo');
+const { mapState, mapMutations } = createNamespacedHelpers('taobaoComment');
 
 export default {
     data() {

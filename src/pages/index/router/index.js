@@ -4,6 +4,15 @@ import Layout from '../views/layout/Index.vue';
 // import Root from '../../../components/Root.vue';
 import Login from '../views/login/Index.vue';
 
+// 模块
+import routeTeacher from './modules/teacher';
+import routeProduct from './modules/product';
+import routeCourse from './modules/course';
+import routeStudent from './modules/student';
+import routeComment from './modules/taobao-comment';
+import routeClause from './modules/clause';
+import routeStory from './modules/story';
+
 Vue.use(Router);
 
 // 一个空模板，方便子节点使用
@@ -60,232 +69,13 @@ const asyncRoutes = [
             },
         ],
     },
-    {
-        path: '/document',
-        component: Layout,
-        redirect: { path: '/document/index' },
-        meta: {
-            title: '说明文档',
-            icon: 'el-icon-document',
-        },
-        children: [
-            {
-                path: 'index',
-                component: () => import('../views/document/Index.vue'),
-                meta: {
-                    title: '说明文档首页',
-                    hidden: true,
-                },
-            },
-        ],
-    },
-    // {
-    //     path: '/ui',
-    //     component: Layout,
-    //     redirect: { path: '/ui/form' },
-    //     meta: {
-    //         title: '组件',
-    //         icon: 'menu-fix-icon fas fa-puzzle-piece fa-lg fa-fw',
-    //     },
-    //     children: [
-    //         {
-    //             path: 'form',
-    //             component: () => import('../views/ui/Form.vue'),
-    //             meta: {
-    //                 title: '基础表格和表单',
-    //                 icon: 'menu-fix-icon fab fa-wpforms fa-lg fa-fw',
-    //             },
-    //         },
-    //     ],
-    // },
-    {
-        path: '/teacher',
-        component: Layout,
-        redirect: { path: '/teacher/index' },
-        meta: {
-            title: '导师信息',
-            icon: 'el-icon-document',
-        },
-        children: [
-            {
-                path: 'index',
-                component: () => import('../views/teacher/Index.vue'),
-                meta: {
-                    title: '导师信息页面',
-                    hidden: true,
-                },
-            },
-        ],
-    },
-    {
-        path: '/product',
-        component: Layout,
-        redirect: { path: '/product/category' },
-        meta: {
-            title: '产品',
-            icon: 'el-icon-folder',
-        },
-        children: [
-            {
-                path: 'category',
-                component: () => import('../views/category/Index.vue'),
-                meta: {
-                    title: '分类',
-                    icon: 'el-icon-document',
-                },
-            },
-            {
-                path: 'love',
-                redirect: { path: '/product/index/1' },
-                meta: {
-                    title: '恋爱魔法',
-                    icon: 'el-icon-document',
-                },
-            },
-            {
-                path: 'money',
-                redirect: { path: '/product/index/2' },
-                meta: {
-                    title: '招财魔法',
-                    icon: 'el-icon-document',
-                },
-            },
-            {
-                path: 'beauty',
-                redirect: { path: '/product/index/3' },
-                meta: {
-                    title: '美容魔法',
-                    icon: 'el-icon-document',
-                },
-            },
-            {
-                path: 'luck',
-                redirect: { path: '/product/index/4' },
-                meta: {
-                    title: '驱邪转运',
-                    icon: 'el-icon-document',
-                },
-            },
-            {
-                path: 'divination',
-                redirect: { path: '/product/index/5' },
-                meta: {
-                    title: '仪式占卜',
-                    icon: 'el-icon-document',
-                },
-            },
-            {
-                path: 'index/:id',
-                component: () => import('../views/product/Index.vue'),
-                meta: {
-                    title: '产品页面',
-                    hidden: true,
-                    path: {
-                        1: '/product/love',
-                        2: '/product/money',
-                        3: '/product/beauty',
-                        4: '/product/luck',
-                        5: '/product/divination',
-                    },
-                },
-            },
-        ],
-    },
-    {
-        path: '/course',
-        component: Layout,
-        redirect: { path: '/course/index' },
-        meta: {
-            title: '课程',
-            icon: 'el-icon-document',
-        },
-        children: [
-            {
-                path: 'index',
-                component: () => import('../views/course/Index.vue'),
-                meta: {
-                    title: '课程页面',
-                    hidden: true,
-                },
-            },
-        ],
-    },
-    {
-        path: '/student',
-        component: Layout,
-        redirect: { path: '/student/index' },
-        meta: {
-            title: '学员资质',
-            icon: 'el-icon-document',
-        },
-        children: [
-            {
-                path: 'index',
-                component: () => import('../views/student/Index.vue'),
-                meta: {
-                    title: '学员资质页面',
-                    hidden: true,
-                },
-            },
-        ],
-    },
-    {
-        path: '/taobao-info',
-        component: Layout,
-        redirect: { path: '/taobao-info/index' },
-        meta: {
-            title: 'Blog买家秀',
-            icon: 'el-icon-document',
-        },
-        children: [
-            {
-                path: 'index',
-                component: () => import('../views/taobao-info/Index.vue'),
-                meta: {
-                    title: 'Blog买家秀页面',
-                    hidden: true,
-                },
-            },
-        ],
-    },
-    {
-        path: '/clause',
-        component: Layout,
-        redirect: { path: '/clause/index' },
-        meta: {
-            title: '隐私条款',
-            icon: 'el-icon-document',
-        },
-        children: [
-            {
-                path: 'index',
-                component: () => import('../views/clause/Index.vue'),
-                meta: {
-                    title: '隐私条款页面',
-                    hidden: true,
-                },
-            },
-        ],
-    },
-    {
-        path: '/story',
-        component: Layout,
-        redirect: { path: '/story/index' },
-        meta: {
-            title: '品牌故事',
-            icon: 'el-icon-document',
-        },
-        children: [
-            {
-                path: 'index',
-                component: () => import('../views/story/Index.vue'),
-                meta: {
-                    title: '品牌故事页面',
-                    hidden: true,
-                },
-            },
-        ],
-    },
+    ...routeTeacher,
+    ...routeProduct,
+    ...routeCourse,
+    ...routeStudent,
+    ...routeComment,
+    ...routeClause,
+    ...routeStory,
 ];
 
 const scrollBehavior = (to, from, savedPosition) => {
