@@ -8,12 +8,12 @@
         :data="list"
         @selection-change="handleSelectionChange"
     >
-        <el-table-column type="selection" width="60" align="center" />
-        <el-table-column prop="name" label="课程名称" />
-        <el-table-column fixed="right" label="操作" width="120">
+        <el-table-column prop="title1" label="课程名称" />
+        <el-table-column fixed="right" label="操作" width="300">
             <template slot-scope="scope">
-                <el-button @click="handleEdit(scope.$index)" type="primary" size="mini" icon="el-icon-edit" />
-                <el-button @click="handleDelete(scope.$index, scope.row)" type="warning" size="mini" icon="el-icon-delete" />
+                <el-button @click="handleEdit(scope.$index)" type="text" size="mini" icon="el-icon-edit">修改基本信息</el-button>
+                <el-button @click="handleTabEdit(scope.$index)" type="text" size="mini" icon="el-icon-edit">修改内容选项卡</el-button>
+                <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -41,6 +41,11 @@ export default {
         // 编辑
         handleEdit(activeIndex) {
             this.setState({ activeIndex, editVisible: true });
+        },
+
+        // 编辑
+        handleTabEdit(activeIndex) {
+            this.setState({ activeIndex, editTabTitleVisible: true });
         },
 
         // 删除确认

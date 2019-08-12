@@ -11,6 +11,9 @@
 
         <!-- 编辑 -->
         <x-edit />
+
+        <!-- 编辑内容选项卡标题 -->
+        <x-edit-tab-title />
     </div>
 </template>
 
@@ -28,6 +31,7 @@ export default {
         XTable,
         XPagination,
         XEdit: () => import('#index/components/course/edit.vue'),
+        XEditTabTitle: () => import('#index/components/course/editTabTitle.vue'),
     },
     computed: {
         ...mapState(['loading']),

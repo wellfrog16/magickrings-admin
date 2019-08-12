@@ -9,6 +9,8 @@ export default {
         loading: false, // loading层
         activeIndex: -1, // 当前编辑的行
         editVisible: false, // 编辑组件显示控制
+        editTabTitleVisible: false, // 编辑组件显示控制
+        editTabContentVisible: false, // 编辑组件显示控制
         multipleSelection: [], // 批量选中的行数据
         overdue: false, // 数据是否过期，是则立刻刷新重新拉取
     },

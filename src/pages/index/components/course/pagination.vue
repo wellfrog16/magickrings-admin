@@ -1,6 +1,6 @@
 <template>
     <div class="pagination flex-row-center">
-        <el-button type="primary" @click="handleRemove" icon="el-icon-delete">删除选中</el-button>
+        <span></span>
         <el-pagination
             background
             layout="total, prev, pager, next"
