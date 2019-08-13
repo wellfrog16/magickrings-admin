@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-dialog
-            title="课程"
+            title="课程选项卡"
             :visible.sync="editTabTitleVisible"
             :before-close="handleClose"
             :close-on-click-modal="false"
@@ -137,6 +137,10 @@ export default {
                 this.handleClose();
                 this.setState({ overdue: true });
             });
+        },
+
+        handleEdit(row) {
+            this.setState({ activeRow1: row, editTabContentVisible: true });
         },
     },
 };

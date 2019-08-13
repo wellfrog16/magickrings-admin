@@ -11,8 +11,10 @@ export default {
         editVisible: false, // 编辑组件显示控制
         editTabTitleVisible: false, // 编辑组件显示控制
         editTabContentVisible: false, // 编辑组件显示控制
+        editTabContent2Visible: false, // 编辑组件显示控制
         multipleSelection: [], // 批量选中的行数据
         overdue: false, // 数据是否过期，是则立刻刷新重新拉取
+        activeRow1: null,
     },
     mutations: {
         setState: (state, payload) => cstore.mutations.setState(state, payload),

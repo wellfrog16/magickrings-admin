@@ -14,6 +14,12 @@
 
         <!-- 编辑内容选项卡标题 -->
         <x-edit-tab-title />
+
+        <!-- 编辑内容选项卡内容 -->
+        <x-edit-tab-content />
+
+        <!-- 编辑内容选项卡内容 -->
+        <x-edit-tab-content2 />
     </div>
 </template>
 
@@ -32,6 +38,8 @@ export default {
         XPagination,
         XEdit: () => import('#index/components/course/edit.vue'),
         XEditTabTitle: () => import('#index/components/course/editTabTitle.vue'),
+        XEditTabContent: () => import('#index/components/course/editTabContent.vue'),
+        XEditTabContent2: () => import('#index/components/course/editTabContent2.vue'),
     },
     computed: {
         ...mapState(['loading']),

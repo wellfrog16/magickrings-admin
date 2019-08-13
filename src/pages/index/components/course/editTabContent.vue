@@ -1,17 +1,38 @@
 <template>
     <div>
         <el-dialog
-            title="课程"
-            :visible.sync="editTabTitleVisible"
+            title="课程内容"
+            :visible.sync="editTabContentVisible"
             :before-close="handleClose"
             :close-on-click-modal="false"
             append-to-body
             width="820px"
             top="5vh"
         >
+            <el-row>
+                <el-button type="primary" @click="handleClickAdd">添加</el-button>
+            </el-row>
+            <el-table
+                ref="table"
+                class="table"
+                height="500"
+                border
+                stripe
+                :data="list"
+            >
+                <el-table-column prop="type" label="类型" width="80" />
+                <el-table-column prop="title" label="临时标题" />
+                <el-table-column label="操作" width="260">
+                    <template slot-scope="scope">
+                        <el-button @click="handleEditTitle(scope.row)" type="text" size="mini" icon="el-icon-edit">修改</el-button>
+                        <el-button @click="handleEdit(scope.row)" type="text" size="mini" icon="el-icon-edit">编辑内容</el-button>
+                        <el-button @click="handleDelete(scope.$index)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
             <span slot="footer">
                 <el-button @click="handleClose">取消</el-button>
-                <el-button type="primary" @click="save" :loading="saveBusy">保存</el-button>
+                <el-button type="primary" @click="save" :loading="saveBusy">完成</el-button>
             </span>
         </el-dialog>
     </div>
@@ -30,31 +51,32 @@ export default {
         return {
             title: '',
             saveBusy: false,
+            list: [
+                { title: '区域内容1', type: '左图右文' },
+                { title: '区域内容2', type: '左图右文' },
+                { title: '区域内容3', type: '右图左文' },
+                { title: '区域内容4', type: '自定义' },
+            ],
         };
     },
     watch: {
-        editTabTitleVisible(val) {
+        editTabContentVisible(val) {
             val && this.update();
         },
     },
     computed: {
-        ...mapState(['editTabTitleVisible', 'activeIndex', 'courses']),
+        ...mapState(['editTabContentVisible', 'activeIndex', 'courses']),
         ...mapGetters(['activeRow']),
 
-        list() {
-            return this.activeRow.contents;
-        },
+        // list() {
+        //     return (this.activeRow1 && this.activeRow1.contents) || [];
+        // },
     },
     methods: {
         ...mapMutations(['setState']),
 
         handleClickAdd() {
-            this.$prompt('请输入标题', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-            }).then(({ value }) => {
-                value && this.activeRow.contents.push({ title: value, contents: [] });
-            }).catch(() => {});
+            this.setState({ editTabContent2Visible: true });
         },
 
         handleEditTitle(row) {
@@ -88,7 +110,7 @@ export default {
 
         // 关闭，保存中禁止关闭
         handleClose() {
-            !this.saveBusy && this.setState({ editTabTitleVisible: false, overdue: true });
+            !this.saveBusy && this.setState({ editTabContentVisible: false, overdue: true });
             return !this.saveBusy;
         },
 
