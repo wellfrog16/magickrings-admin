@@ -11,6 +11,7 @@
 
         <!-- 编辑 -->
         <x-edit />
+        <x-edit-category />
     </div>
 </template>
 
@@ -28,6 +29,7 @@ export default {
         XTable,
         XPagination,
         XEdit: () => import('#index/components/product/edit.vue'),
+        XEditCategory: () => import('#index/components/product/editCategory.vue'),
     },
     computed: {
         ...mapState(['loading']),

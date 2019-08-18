@@ -21,7 +21,7 @@ const route = {
             path: 'love',
             redirect: { path: '/product/index/1' },
             meta: {
-                title: '恋爱魔法',
+                title: '女巫魔法',
                 icon: 'el-icon-document',
             },
         },
@@ -29,7 +29,7 @@ const route = {
             path: 'money',
             redirect: { path: '/product/index/2' },
             meta: {
-                title: '招财魔法',
+                title: '魔法首饰',
                 icon: 'el-icon-document',
             },
         },
@@ -37,7 +37,7 @@ const route = {
             path: 'beauty',
             redirect: { path: '/product/index/3' },
             meta: {
-                title: '美容魔法',
+                title: '灵气水晶',
                 icon: 'el-icon-document',
             },
         },
@@ -45,7 +45,7 @@ const route = {
             path: 'luck',
             redirect: { path: '/product/index/4' },
             meta: {
-                title: '驱邪转运',
+                title: '魔法周边',
                 icon: 'el-icon-document',
             },
         },
@@ -53,7 +53,7 @@ const route = {
             path: 'divination',
             redirect: { path: '/product/index/5' },
             meta: {
-                title: '仪式占卜',
+                title: '仪式占卜（待迁移）',
                 icon: 'el-icon-document',
             },
         },

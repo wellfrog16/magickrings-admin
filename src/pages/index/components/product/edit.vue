@@ -29,6 +29,8 @@
                             <el-radio-group v-model="form.fields.status">
                                 <el-radio-button v-for="item in status" :label="item" :key="item" />
                             </el-radio-group>
+                            -
+                            <el-button type="primary" icon="el-icon-delete" @click="form.fields.status = ''"></el-button>
                         </el-form-item>
                         <el-form-item prop="price" label="价格">
                             <el-input v-model="form.fields.price" />

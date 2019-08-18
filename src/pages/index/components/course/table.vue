@@ -9,11 +9,10 @@
         @selection-change="handleSelectionChange"
     >
         <el-table-column prop="title1" label="课程名称" />
-        <el-table-column fixed="right" label="操作" width="300">
+        <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
-                <el-button @click="handleEdit(scope.$index)" type="text" size="mini" icon="el-icon-edit">修改基本信息</el-button>
-                <el-button @click="handleTabEdit(scope.$index)" type="text" size="mini" icon="el-icon-edit">修改内容选项卡</el-button>
-                <el-button @click="handleDelete(scope.$index, scope.row)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
+                <el-button @click="handleEdit(scope.$index)" type="primary" size="mini" icon="el-icon-edit" />
+                <el-button @click="handleDelete(scope.$index, scope.row)" type="warning" size="mini" icon="el-icon-delete" />
             </template>
         </el-table-column>
     </el-table>

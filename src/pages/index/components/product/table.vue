@@ -19,8 +19,9 @@
         <el-table-column prop="name" label="产品名称" width="280" />
         <el-table-column prop="price" label="价格" width="80" align="right" />
         <el-table-column prop="message" label="简介" show-overflow-tooltip />
-        <el-table-column fixed="right" label="操作" width="120">
+        <el-table-column fixed="right" label="操作" width="250">
             <template slot-scope="scope">
+                <el-button @click="handleEditCategory(scope.$index, scope.row)" type="primary" size="mini" icon="el-icon-edit">修改分类</el-button>
                 <el-button @click="handleEdit(scope.$index)" type="primary" size="mini" icon="el-icon-edit" />
                 <el-button @click="handleDelete(scope.$index, scope.row)" type="warning" size="mini" icon="el-icon-delete" />
             </template>
@@ -46,6 +47,15 @@ export default {
     },
     methods: {
         ...mapMutations(['setState']),
+
+        handleEditCategory(activeIndex, row) {
+            this.setState({
+                activeIndex,
+                editCategoryVisible: true,
+                activeCategory: row.category,
+                activeChild: row.child,
+            });
+        },
 
         // 编辑
         handleEdit(activeIndex) {

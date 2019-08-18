@@ -12,16 +12,6 @@
                 />
             </el-form-item>
             <el-form-item>
-                <el-select v-model="form.fields.course" multiple clearable collapse-tags placeholder="所有课程">
-                    <el-option
-                        v-for="item in courses"
-                        :key="item"
-                        :label="item"
-                        :value="item"
-                    />
-                </el-select>
-            </el-form-item>
-            <el-form-item>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">查询</el-button>
             </el-form-item>
         </el-form>

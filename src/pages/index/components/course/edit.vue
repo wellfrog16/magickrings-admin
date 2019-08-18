@@ -32,6 +32,8 @@
                             <el-radio-group v-model="form.fields.status">
                                 <el-radio-button v-for="item in status" :label="item" :key="item" />
                             </el-radio-group>
+                            -
+                            <el-button type="primary" icon="el-icon-delete" @click="form.fields.status = ''"></el-button>
                         </el-form-item>
                         <el-form-item prop="price" label="价格">
                             <el-input v-model="form.fields.price" />
@@ -80,6 +82,23 @@
                             <tinymce v-model="form.fields.description2" :height="400" config="simple" />
                         </el-form-item>
                     </el-tab-pane>
+                    <el-tab-pane label="详细描述" name="c">
+                        <el-tabs v-model="activeContentName" type="border-card" editable @edit="handleTabsEdit">
+                            <el-tab-pane
+                                v-for="item in form.fields.contents"
+                                :key="item.tabIndex"
+                                :label="item.title"
+                                :name="item.tabIndex"
+                            >
+                                <el-form-item label="标题">
+                                    <el-input v-model="item.title" minlength="1" maxlength="10" show-word-limit placeholder="请输入标题" />
+                                </el-form-item>
+                                <el-form-item label="内容">
+                                    <tinymce v-model="item.content" :height="400" config="simple" />
+                                </el-form-item>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </el-tab-pane>
                 </el-tabs>
             </el-form>
             <span slot="footer">
@@ -96,6 +115,7 @@ import config from '@/config';
 import api from '@/api/usr/course';
 import Tinymce from '@/components/tinymce/index.vue';
 import { rules } from '@/utils/rivers';
+import { $ } from '@/utils/cdn';
 
 const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('course');
 
@@ -108,14 +128,14 @@ export default {
         return {
             uploadUrl: config.server.upload,
             saveBusy: false,
-            status: ['hot', 'sales', 'new', '无'],
+            status: ['hot', 'sales', 'new'],
             activeItem: {},
             activeName: 'a',
             activeContentName: 'default',
             form: {
                 fields: self.createFields(),
                 rules: {
-                    ...rules.noEmpty({ key: 'name', message: '学员名称不能为空' }),
+                    ...rules.noEmpty({ key: 'name', message: '课程名称不能为空' }),
                 },
             },
         };
@@ -141,6 +161,36 @@ export default {
     methods: {
         ...mapMutations(['setState']),
 
+        handleTabsEdit(targetName, action) {
+            if (action === 'add') {
+                const tabIndex = `index${Math.ceil(Math.random() * 100000000)}`;
+                const title = `新分类${Math.ceil(Math.random() * 1000)}`;
+                this.form.fields.contents.push({
+                    title,
+                    content: '',
+                    tabIndex,
+                });
+                this.activeContentName = tabIndex;
+            }
+
+            if (action === 'remove' && this.activeContentName !== 'default') {
+                const tabs = [...this.form.fields.contents];
+                if (this.activeContentName === targetName) {
+                    tabs.forEach((tab, index) => {
+                        // console.log(tab.tabIndex, targetName);
+                        if (tab.tabIndex === targetName) {
+                            const nextTab = tabs[index + 1] || tabs[index - 1];
+                            if (nextTab) {
+                                this.activeContentName = nextTab.tabIndex;
+                            }
+                        }
+                    });
+                }
+
+                this.form.fields.contents = tabs.filter(tab => tab.tabIndex !== targetName);
+            }
+        },
+
         // 创建一个空的fileds副本
         createFields() {
             const fields = {
@@ -155,7 +205,9 @@ export default {
                 photo2: '',
                 description1: '',
                 description2: '',
-                contents: [],
+                contents: [
+                    { title: '标题', content: '', tabIndex: 'default' },
+                ],
             };
 
             return Object.assign({ category: this.category }, fields);
@@ -189,10 +241,11 @@ export default {
         async update() {
             this.activeName = 'a';
             if (this.activeRow.id) {
-                // 这里实际开发需要去请求数据并更新，现在用行数据临时更新
-                // await api.detail(this.activeRow._id);
-                this.form.fields = { ...this.activeRow };
+                const copy = this.createFields();
+                this.form.fields = $.extend(true, copy, this.activeRow);
+                this.activeContentName = this.form.fields.contents[0].tabIndex;
             } else {
+                this.activeContentName = 'default';
                 this.form.fields = this.createFields();
             }
             this.$nextTick(() => this.$refs.form.clearValidate());
