@@ -49,6 +49,7 @@
                                 <img v-if="form.fields.photo1" :src="photoUrl1" class="avatar">
                                 <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
                             </el-upload>
+                            600px * 840px
                         </el-form-item>
                         <el-form-item prop="videoUrl" label="视频地址">
                             <el-input v-model="form.fields.videoUrl">
