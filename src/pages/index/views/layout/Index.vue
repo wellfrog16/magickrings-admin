@@ -1,7 +1,7 @@
 <template>
     <el-container :class="$style.container">
         <el-aside :class="$style.aside" :width="width">
-            <h1 :class="$style.logo"><span>管理系统logo</span></h1>
+            <h1 :class="$style.logo"><span>管理系统</span></h1>
             <aside-menu
                 class="aside-menu"
                 :data="menuData"

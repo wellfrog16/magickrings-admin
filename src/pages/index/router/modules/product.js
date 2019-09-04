@@ -49,14 +49,14 @@ const route = {
                 icon: 'el-icon-document',
             },
         },
-        {
-            path: 'divination',
-            redirect: { path: '/product/index/5' },
-            meta: {
-                title: '仪式占卜（待迁移）',
-                icon: 'el-icon-document',
-            },
-        },
+        // {
+        //     path: 'divination',
+        //     redirect: { path: '/product/index/5' },
+        //     meta: {
+        //         title: '仪式占卜（待迁移）',
+        //         icon: 'el-icon-document',
+        //     },
+        // },
         {
             path: 'index/:id',
             component: () => import('#index/views/product/Index.vue'),

@@ -5,9 +5,9 @@ import Layout from '../views/layout/Index.vue';
 import Login from '../views/login/Index.vue';
 
 // 模块
-import routeTeacher from './modules/teacher';
+// import routeTeacher from './modules/teacher';
 import routeProduct from './modules/product';
-import routeCourse from './modules/course';
+// import routeCourse from './modules/course';
 import routeStudent from './modules/student';
 import routeComment from './modules/taobao-comment';
 import routeClause from './modules/clause';
@@ -56,7 +56,7 @@ const asyncRoutes = [
         redirect: { path: '/home/index' },
         meta: {
             icon: 'menu-fix-icon fas fa-home fa-lg fa-fw',
-            title: '首页',
+            title: '首页公告',
         },
         children: [
             {
@@ -64,14 +64,14 @@ const asyncRoutes = [
                 component: () => import('../views/home/Index.vue'),
                 meta: {
                     hidden: true,
-                    title: '首页详细',
+                    title: '首页公告',
                 },
             },
         ],
     },
-    ...routeTeacher,
+    // ...routeTeacher,
     ...routeProduct,
-    ...routeCourse,
+    // ...routeCourse,
     ...routeStudent,
     ...routeComment,
     ...routeClause,
