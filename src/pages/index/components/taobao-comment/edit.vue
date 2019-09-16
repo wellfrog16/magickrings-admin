@@ -16,7 +16,7 @@
                 <el-input v-model="form.fields.author" minlength="1" maxlength="20" />
             </el-form-item>
             <el-form-item prop="message" label="简述">
-                <el-input v-model="form.fields.message" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" show-word-limit maxlength="100" />
+                <el-input v-model="form.fields.message" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" show-word-limit maxlength="150" />
             </el-form-item>
             <el-form-item prop="url" label="链接地址">
                 <el-input v-model="form.fields.url" maxlength="100" />

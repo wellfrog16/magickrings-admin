@@ -1,23 +1,23 @@
 <template>
     <el-card shadow="never" :loading="saveBusy">
         <el-form ref="form" :model="form.fields" :rules="form.rules">
-            <el-form-item label="标题" prop="title">
-                <el-input v-model="form.fields.title" placeholder="请输入标题"></el-input>
+            <el-form-item label="公告图片" prop="photo">
+                <div style="clear: both;">
+                    <el-upload
+                        name="avatar"
+                        :class="$style['photo-uploader']"
+                        :action="uploadUrl"
+                        :show-file-list="false"
+                        :on-success="handleUploadSuccess"
+
+                    >
+                        <img v-if="form.fields.photo" :src="photoUrl" class="avatar">
+                        <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
+                    </el-upload>
+                </div>
             </el-form-item>
-            <el-form-item prop="photo" label-width="0">
-                <el-upload
-                    name="avatar"
-                    :class="$style['photo-uploader']"
-                    :action="uploadUrl"
-                    :show-file-list="false"
-                    :on-success="handleUploadSuccess"
-                >
-                    <img v-if="form.fields.photo" :src="photoUrl" class="avatar">
-                    <i v-else :class="[$style['photo-uploader-icon'], 'el-icon-plus']"></i>
-                </el-upload>
-            </el-form-item>
-            <el-form-item label="内容" prop="content">
-                <tinymce v-model="form.fields.content" :height="400" config="simple" />
+            <el-form-item label="链接地址" prop="url">
+                <el-input placeholder="链接地址" v-model="form.url" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="handleSave">保 存</el-button>
@@ -29,16 +29,12 @@
 <script>
 import api from '@/api/usr/notification';
 import { rules } from '@/utils/rivers';
-import Tinymce from '@/components/tinymce/index.vue';
 import config from '@/config';
 // import { createNamespacedHelpers } from 'vuex';
 
 // const { mapState, mapMutations, mapGetters } = createNamespacedHelpers('baseForm');
 
 export default {
-    components: {
-        Tinymce,
-    },
     data() {
         return {
             saveBusy: false,
@@ -46,13 +42,11 @@ export default {
             form: {
                 fields: {
                     guid: 'notification', // 数据库存储标识
-                    title: '',
-                    content: '',
                     photo: '',
+                    url: '',
                 },
                 rules: {
-                    ...rules.check({ key: 'title', message: '标题不能为空' }),
-                    ...rules.check({ key: 'content', message: '内容不能为空' }),
+                    ...rules.check({ key: 'photo', message: '请上传图片' }),
                 },
             },
         };
@@ -114,6 +108,8 @@ export default {
         position: relative;
         overflow: hidden;
         line-height: 0;
+        width: 750px;
+        height: 450px;
 
         &:hover {
             border-color: #409eff;
@@ -121,8 +117,8 @@ export default {
     }
 
     img {
-        width: 178px;
-        height: 178px;
+        width: 748px;
+        height: 448px;
     }
 }
 

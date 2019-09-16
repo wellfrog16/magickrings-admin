@@ -11,7 +11,7 @@ export default {
         editVisible: false, // 编辑组件显示控制
         multipleSelection: [], // 批量选中的行数据
         overdue: false, // 数据是否过期，是则立刻刷新重新拉取
-        courses: ['灵气课程', '通灵课程', '草药学科', '美容魔法课'],
+        courses: ['灵气课程', '通灵课程', '花精课程', '美容魔法课'],
     },
     mutations: {
         setState: (state, payload) => cstore.mutations.setState(state, payload),
