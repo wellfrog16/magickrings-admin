@@ -10,7 +10,6 @@
     >
         <el-table-column type="selection" width="60" align="center" />
         <el-table-column prop="name" label="学员姓名" width="120" />
-        <el-table-column prop="code" label="证书编号" width="200" />
         <el-table-column prop="level" label="等级" width="200">
             <template slot-scope="scope"><el-rate v-model="scope.row.level" disabled /></template>
         </el-table-column>

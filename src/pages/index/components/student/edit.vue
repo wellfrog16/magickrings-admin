@@ -12,9 +12,6 @@
             <el-form-item prop="name" label="学员姓名">
                 <el-input v-model="form.fields.name" minlength="1" maxlength="20" show-word-limit />
             </el-form-item>
-            <el-form-item prop="code" label="证书编号">
-                <el-input v-model="form.fields.code" minlength="1" maxlength="40" show-word-limit />
-            </el-form-item>
             <el-form-item prop="course" label="课程">
                 <el-checkbox-group v-model="form.fields.course">
                     <el-checkbox-button v-for="course in courses" :label="course" :key="course">{{ course }}</el-checkbox-button>
@@ -75,7 +72,7 @@ export default {
                 fields: self.createFields(),
                 rules: {
                     ...rules.noEmpty({ key: 'name', message: '学员名称不能为空' }),
-                    ...rules.noEmpty({ key: 'code', message: '证书编号不能为空' }),
+                    // ...rules.noEmpty({ key: 'code', message: '证书编号不能为空' }),
                     ...rules.noEmpty({ key: 'photo', message: '请上传照片' }),
                 },
             },
