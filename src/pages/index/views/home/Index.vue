@@ -20,6 +20,13 @@
                 <el-input placeholder="链接地址" v-model="form.url" />
             </el-form-item>
             <el-form-item>
+                <el-switch
+                    v-model="form.fields.show"
+                    active-text="开启"
+                    inactive-text="关闭">
+                </el-switch>
+            </el-form-item>
+            <el-form-item>
                 <el-button type="primary" @click="handleSave">保 存</el-button>
             </el-form-item>
         </el-form>
@@ -44,6 +51,7 @@ export default {
                     guid: 'notification', // 数据库存储标识
                     photo: '',
                     url: '',
+                    show: false,
                 },
                 rules: {
                     ...rules.check({ key: 'photo', message: '请上传图片' }),
@@ -68,6 +76,7 @@ export default {
                 this.form.fields.title = res.title;
                 this.form.fields.content = res.content;
                 this.form.fields.photo = res.photo;
+                this.form.fields.show = res.show;
             }
             this.$nextTick(() => {
                 this.saveBusy = false;
